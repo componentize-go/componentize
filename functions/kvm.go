@@ -10,9 +10,6 @@ import (
 //
 // The `otherMap` parameter is optional.
 //
-// This function it's intended to use in a FuncMap `html/template` with the Go template syntax or another
-// framework/lbrary that supports FuncMap and Go template syntax
-//
 // The mainly use that you can give it is, when you want to pass more than one value to a template
 // you have to create a struct and then if in your template you render more than one template that
 // needs more data you have to create a bigger struct and that is incovenient. So you can simply use
