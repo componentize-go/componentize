@@ -62,7 +62,7 @@
   func UID() (string, error)
   ```
 
-  Template function that provides a way of generate Unique ID's. You may want to use this function when you want to add Javascript to your template, think about an ID that is not repeated in the template
+  Template function that provides a way of generate Unique ID's. You may want to use this function when you want to add Javascript to your template, and you don't want think about an ID that is not repeated in the template
 
   Quick usage:
   ```go
