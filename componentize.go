@@ -13,11 +13,11 @@ import (
 // functionality or name, or because you simply only need a few of them, you can use the `WithConfig` constructor
 // with whatever functions you want.
 func Default() template.FuncMap {
-	m := map[string]any{}
-	m["KVM"] = functions.KVM
-	m["UID"] = functions.UID
-
-	return m
+	return map[string]any{
+		"KVM":   functions.KVM,
+		"UID":   functions.UID,
+		"Array": functions.Array,
+	}
 }
 
 type Config struct {
@@ -30,13 +30,19 @@ type Config struct {
 	//
 	// default: `false`
 	UsingUID bool
+
+	// Mark as `true` if you want to use the `Array` function.
+	//
+	// default: `false`
+	UsingArray bool
 }
 
 // Use this constructor if you don't want to use all of the functions that provides the Default constructor
 //
 // You can select what functions you want with the `config` param.
 func WithConfig(config Config) template.FuncMap {
-	m := map[string]any{}
+	m := make(map[string]any, 3)
+
 	if config.UsingKVM {
 		m["KVM"] = functions.KVM
 	}
@@ -44,5 +50,10 @@ func WithConfig(config Config) template.FuncMap {
 	if config.UsingUID {
 		m["UID"] = functions.UID
 	}
+
+	if config.UsingArray {
+		m["Array"] = functions.Array
+	}
+
 	return m
 }
