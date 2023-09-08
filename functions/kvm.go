@@ -2,8 +2,10 @@ package functions
 
 import (
 	"fmt"
-	"strings"
+	"regexp"
 )
+
+var validKeyRegExp = regexp.MustCompile(`^[^0-9][a-zA-Z0-9_]*$`)
 
 // KVM stands for "Key Value Map", it's a function that returns a map with the `key` and `value`
 // added to the `otherMap` parameter if it's passed in.
@@ -16,15 +18,19 @@ import (
 // this function inside of your template and then create "On The Way" your struct inside of the template
 // rather than in your source Go files.
 func KVM(key string, value any, otherMap ...map[string]any) (map[string]any, error) {
-	if strings.TrimSpace(key) == "" {
-		return nil, fmt.Errorf("")
+	if !validKeyRegExp.MatchString(key) {
+		return nil, fmt.Errorf(`the key "%s" must be a alpha-numeric string but must no start with a number`, key)
 	}
-	m := map[string]any{}
-	m[key] = value
 
 	if len(otherMap) == 0 {
-		return m, nil
+		return map[string]any{key: value}, nil
 	}
+
+	if otherMap[0] == nil {
+		return nil, fmt.Errorf("the third argument is nil, must pass a valid KVM return value or a map[string]any")
+	}
+
+	m := make(map[string]any, len(otherMap[0]))
 
 	for k, v := range otherMap[0] {
 		m[k] = v
