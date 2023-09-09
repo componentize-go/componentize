@@ -31,6 +31,7 @@ func KVM(key string, value any, otherMap ...map[string]any) (map[string]any, err
 	}
 
 	m := make(map[string]any, len(otherMap[0]))
+	m[key] = value
 
 	for k, v := range otherMap[0] {
 		m[k] = v
