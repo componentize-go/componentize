@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-var validKeyRegExp = regexp.MustCompile(`^[^0-9][a-zA-Z0-9_]*$`)
+var validKeyRegExp = regexp.MustCompile(`^[a-zA-Z_][a-zA-Z0-9_]*$`)
 
 // KVM stands for "Key Value Map", it's a function that returns a map with the `key` and `value`
 // added to the `otherMap` parameter if it's passed in.
@@ -30,7 +30,7 @@ func KVM(key string, value any, otherMap ...map[string]any) (map[string]any, err
 		return nil, fmt.Errorf("the third argument is nil, must pass a valid KVM return value or a map[string]any")
 	}
 
-	m := make(map[string]any, len(otherMap[0]))
+	m := make(map[string]any, len(otherMap[0]) + 1)
 	m[key] = value
 
 	for k, v := range otherMap[0] {
